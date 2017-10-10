@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MChohan:jar">
+    <output-path>C:/ビルド/plugins</output-path>
+    <root id="archive" name="MChohan.jar">
+      <element id="module-output" name="MChohan" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/plugin.yml" />
+    </root>
+  </artifact>
+</component>

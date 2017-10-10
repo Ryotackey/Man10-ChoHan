@@ -1,0 +1,9 @@
+name: M_Chohan
+version: 1.0.0
+auther: Ryotackey
+main: jp.ryotackey.chohan.MChohan
+commands:
+  mch:
+    describe: Command no setsumeibunh.
+    usage: /mch
+    default: true
