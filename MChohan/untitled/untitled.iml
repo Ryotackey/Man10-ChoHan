@@ -19,11 +19,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/ビルド/spigot-1.12.1.jar!/" />
+          <root url="jar://$USER_HOME$/Desktop/spigot-1.12.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://C:/ビルド/spigot-1.12.1.jar!/" />
+          <root url="jar://$USER_HOME$/Desktop/spigot-1.12.2.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="spintest.jar">
+    <output-path>C:/ビルド/plugins</output-path>
+    <root id="archive" name="untitled.jar">
+      <element id="module-output" name="untitled" />
+      <element id="file-copy" path="$PROJECT_DIR$/../test/src/plugin.yml" />
+    </root>
+  </artifact>
+</component>
