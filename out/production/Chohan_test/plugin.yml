@@ -1,0 +1,8 @@
+name: Chohan_plugin
+version: 1.0.0
+main: me.ryotackey.chohan.Chohan_test
+commands:
+  mc:
+    description: Command no setsumei
+    usage: /<command>
+    default: true
