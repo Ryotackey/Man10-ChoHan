@@ -47,6 +47,21 @@ public class Chohan_test extends JavaPlugin {
                 if (args[0].equalsIgnoreCase("c")) {
                     if (setup == true) {
 
+                        for (int i = 0; i < chou.size(); i++){
+
+                            if (chou.get(i) == playeruuid){
+                                p.sendMessage("§e§l[Man10 丁半]§4§lもうすでに丁に張っています");
+                                return true;
+                            }
+                        }
+
+                        for (int i = 0; i < han.size(); i++){
+
+                            if (han.get(i) == playeruuid){
+                                han.remove(i);
+                            }
+                        }
+
                         chou.add(playeruuid);
                         p.sendMessage("§e§l[Man10 丁半]§a§l丁に張りました");
                         return true;
@@ -59,6 +74,21 @@ public class Chohan_test extends JavaPlugin {
 
                 if (args[0].equalsIgnoreCase("h")) {
                     if (setup == true) {
+
+                        for (int i = 0; i < han.size(); i++){
+
+                            if (han.get(i) == playeruuid){
+                                p.sendMessage("§e§l[Man10 丁半]§4§lもうすでに半に張っています");
+                                return true;
+                            }
+                        }
+
+                        for (int i = 0; i < chou.size(); i++){
+
+                            if (chou.get(i) == playeruuid){
+                                chou.remove(i);
+                            }
+                        }
 
                         han.add(playeruuid);
                         p.sendMessage("§e§l[Man10 丁半]§a§l半に張りました");
