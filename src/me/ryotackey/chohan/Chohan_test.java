@@ -24,7 +24,7 @@ public class Chohan_test extends JavaPlugin {
     public static double bal;
 
 
-    
+
     public VaultManager val = new VaultManager(this);
 
     @Override
