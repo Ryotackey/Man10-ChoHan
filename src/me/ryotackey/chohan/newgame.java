@@ -2,13 +2,96 @@ package me.ryotackey.chohan;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
+import java.util.Random;
+
+import static me.ryotackey.chohan.Chohan_test.*;
 
 public class newgame {
 
-    public boolean Start(){
-        Bukkit.getServer().broadcastMessage("§e§l[Man10 丁半]§a丁半が始められました!");
+    private Chohan_test plugin;
+
+    public newgame(Chohan_test plugin){
+        this.plugin = plugin;
+    }
+
+    int timer = config.getInt("Waittime");
+
+    public boolean Start(Player p){
+        owner = p;
+        Bukkit.getServer().broadcastMessage("§e§l[Man10 丁半]§a§l" + bal + "円丁半が始められました!");
+        onStartTimer();
         return true;
     }
+
+
+    public void onStartTimer(){
+
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                if (setup = true) {
+                    if (timer != 0) {
+                        if (timer % 10 == 0) {
+                            Bukkit.getServer().broadcastMessage("§e[Man10 丁半]§aBET受付終了まであと" + timer + "秒");
+                        }
+                    } else {
+                        if (chou.size() == 0|| han.size() == 0){
+                           plugin.gameclear();
+                            Bukkit.getServer().broadcastMessage("§e§l[Man10 丁半]§4§l人数が集まらなかったため中止しました");
+
+                            cancel();
+                            return;
+                        }else {
+                            Game();
+                            cancel();
+                            return;
+                        }
+                    }
+                }else {
+                    cancel();
+                    return;
+                }
+                timer--;
+            }
+        }.runTaskTimer(plugin,0,20);
+    }
+
+    public void Game(){
+
+        Player[] chouplayer = new Player[chou.size()];
+        Player[] hanplayer = new Player[han.size()];
+
+        double totalbal = bal * (chou.size() + han.size());
+        double payout = 0;
+
+        Random rdice = new Random();
+        int dice = rdice.nextInt(6) + 1;
+        String chouhan;
+
+        if (dice % 2 == 0){
+            chouhan = "丁";
+            payout = totalbal / chou.size();
+        }else {
+            chouhan = "半";
+            payout = totalbal / han.size();
+        }
+
+        for (int i = 0; i < chou.size(); i++) {
+            plugin.val.withdraw(chou.get(i), bal);
+            chouplayer[i] = Bukkit.getPlayer(chou.get(i));
+            chouplayer[i].sendMessage("§e§l[Man10 丁半]§a§lサイコロを振って" + dice + "がでました！よって" + chouhan + "の勝ちです！");
+            plugin.val.deposit(chou.get(i), payout);
+        }
+
+        for (int i = 0; i < han.size(); i++) {
+            plugin.val.withdraw(han.get(i), bal);
+            hanplayer[i] = Bukkit.getPlayer(han.get(i));
+            hanplayer[i].sendMessage("§e§l[Man10 丁半]§a§lサイコロを振って" + dice + "がでました！よって" + chouhan + "の勝ちです！");
+            plugin.val.deposit(han.get(i), payout);
+        }
+
+    }
+
 }
