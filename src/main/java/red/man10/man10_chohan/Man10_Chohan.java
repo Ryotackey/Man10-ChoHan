@@ -52,7 +52,9 @@ public class Man10_Chohan extends JavaPlugin {
 
         switch (args.length) {
             case 0:
-                p.sendMessage("§e§l[Man10 丁半]§4§l/mc [c/h/new/list]");
+                p.sendMessage("§e§l-----§0§l[§d§lMa§f§ln§a§l10§c§l丁§b§l半§0§l]§e§l---------");
+                p.sendMessage("§e現在の状況:§f(§c丁:§f, §b半:" + han.size() + "§f)§a(現在合計" + jpnBalForm(totalbal) + "円)");
+                p.sendMessage("");
                 break;
 
             case 1:
@@ -62,7 +64,7 @@ public class Man10_Chohan extends JavaPlugin {
                 if (args[0].equalsIgnoreCase("c")) {
                     if (setup == true) {
                         if (playerbet < bal) {
-                            p.sendMessage("§e§l[Man10 丁半]§4§lお金が足りません");
+                            p.sendMessage("§e§l[Man10丁半]§4§lお金が足りません");
                             return false;
                         }else {
                             if (chou.size() < MaxPlayer) {
@@ -70,7 +72,7 @@ public class Man10_Chohan extends JavaPlugin {
                                 for (int i = 0; i < chou.size(); i++) {
 
                                     if (chou.get(i) == playeruuid) {
-                                        p.sendMessage("§e§l[Man10 丁半]§4§lもうすでに丁に張っています");
+                                        p.sendMessage("§e§l[Man10丁半]§4§lもうすでに丁に張っています");
                                         return true;
                                     }
                                 }
@@ -80,7 +82,7 @@ public class Man10_Chohan extends JavaPlugin {
                                     if (han.get(i) == playeruuid) {
                                         han.remove(i);
                                         chou.add(playeruuid);
-                                        Bukkit.broadcastMessage("§e§l[Man10 丁半]§0§l" + p.getName() +"さんが丁に張りました§f(§c丁:" + chou.size() + "§f, §b半:" + han.size() + "§f)§a(現在合計" + totalbal + "円)");
+                                        Bukkit.broadcastMessage("§e§l[Man10丁半]§c§l" + p.getName() +"さんが丁に張りました§f(§c丁:" + chou.size() + "§f, §b半:" + han.size() + "§f)§a(現在合計" + jpnBalForm(totalbal) + "円)");
                                         return true;
                                     }
                                 }
@@ -88,16 +90,16 @@ public class Man10_Chohan extends JavaPlugin {
                                 chou.add(playeruuid);
                                 val.withdraw(playeruuid, bal);
                                 totalbal += bal;
-                                Bukkit.broadcastMessage("§e§l[Man10 丁半]§c§l" + p.getName() +"さんが丁に張りました§f(§c丁:" + chou.size() + "§f, §b半:" + han.size() + "§f)§a(現在合計" + totalbal + "円)");
+                                Bukkit.broadcastMessage("§e§l[Man10丁半]§c§l" + p.getName() +"さんが丁に張りました§f(§c丁:" + chou.size() + "§f, §b半:" + han.size() + "§f)§a(現在合計" + jpnBalForm(totalbal) + "円)");
 
                                 return true;
                             } else {
-                                p.sendMessage("§e§l[Man10 丁半]§4§lもう定員です");
+                                p.sendMessage("§e§l[Man10丁半]§4§lもう定員です");
                                 return true;
                             }
                         }
                     } else {
-                        p.sendMessage("§e§l[Man10 丁半]§4§l丁半は開始されてません");
+                        p.sendMessage("§e§l[Man10丁半]§4§l丁半は開始されてません");
                         return false;
 
                     }
@@ -106,14 +108,14 @@ public class Man10_Chohan extends JavaPlugin {
                 if (args[0].equalsIgnoreCase("h")) {
                     if (setup == true) {
                         if (playerbet < bal) {
-                            p.sendMessage("§e§l[Man10 丁半]§4§lお金が足りません");
+                            p.sendMessage("§e§l[Man10丁半]§4§lお金が足りません");
                             return false;
                         }else {
                             if (han.size() < MaxPlayer) {
                                 for (int i = 0; i < han.size(); i++) {
 
                                     if (han.get(i) == playeruuid) {
-                                        p.sendMessage("§e§l[Man10 丁半]§4§lもうすでに半に張っています");
+                                        p.sendMessage("§e§l[Man10丁半]§4§lもうすでに半に張っています");
                                         return true;
                                     }
                                 }
@@ -123,7 +125,7 @@ public class Man10_Chohan extends JavaPlugin {
                                     if (chou.get(i) == playeruuid) {
                                         chou.remove(i);
                                         han.add(playeruuid);
-                                        Bukkit.broadcastMessage("§e§l[Man10 丁半]§b§l" + p.getName() +"さんが半に張りました§f(§c丁:" + chou.size() + "§f, §b半:" + han.size() + "§f)§a(現在合計" + totalbal + "円)");
+                                        Bukkit.broadcastMessage("§e§l[Man10丁半]§b§l" + p.getName() +"さんが半に張りました§f(§c丁:" + chou.size() + "§f, §b半:" + han.size() + "§f)§a(現在合計" + jpnBalForm(totalbal) + "円)");
                                         return true;
                                     }
                                 }
@@ -131,17 +133,17 @@ public class Man10_Chohan extends JavaPlugin {
                                 han.add(playeruuid);
                                 val.withdraw(playeruuid, bal);
                                 totalbal += bal;
-                                Bukkit.broadcastMessage("§e§l[Man10 丁半]§b§l" + p.getName() +"さんが半に張りました§f(§c丁:" + chou.size() + "§f, §b半:" + han.size() + "§f)§a(現在合計" + totalbal + "円)");
+                                Bukkit.broadcastMessage("§e§l[Man10丁半]§b§l" + p.getName() +"さんが半に張りました§f(§c丁:" + chou.size() + "§f, §b半:" + han.size() + "§f)§a(現在合計" + jpnBalForm(totalbal) + "円)");
 
                                 return true;
                             } else {
-                                p.sendMessage("§e§l[Man10 丁半]§4§lもう定員です");
+                                p.sendMessage("§e§l[Man10丁半]§4§lもう定員です");
                                 return true;
                             }
                         }
 
                     } else {
-                        p.sendMessage("§e§l[Man10 丁半]§4§l丁半は開始されてません");
+                        p.sendMessage("§e§l[Man10丁半]§4§l丁半は開始されてません");
                         return false;
                     }
                 }
@@ -152,7 +154,7 @@ public class Man10_Chohan extends JavaPlugin {
                     String[] hanplayer = new String[han.size()];
 
                     if (setup == true) {
-                        p.sendMessage("§e§l[Man10 丁半]§a§l" + bal + "円丁半");
+                        p.sendMessage("§e§l[Man10丁半]§a§l" + jpnBalForm(bal) + "円丁半");
                         p.sendMessage("§a§l～丁～");
                         for (int i = 0; i < chou.size(); i++) {
 
@@ -171,7 +173,7 @@ public class Man10_Chohan extends JavaPlugin {
                         }
                         return true;
                     }else {
-                        p.sendMessage("§e§l[Man10 丁半]§4§l丁半は開始されてません");
+                        p.sendMessage("§e§l[Man10丁半]§4§l丁半は開始されてません");
                         return false;
                     }
                 }
@@ -182,19 +184,19 @@ public class Man10_Chohan extends JavaPlugin {
 
                             gameclear();
 
-                            Bukkit.getServer().broadcastMessage("§e§l[Man10 丁半]§a§l丁半がキャンセルされました");
+                            Bukkit.getServer().broadcastMessage("§e§l[Man10丁半]§a§l丁半がキャンセルされました");
 
                         }else {
                             if (owner == p) {
                                 gameclear();
-                                Bukkit.getServer().broadcastMessage("§e§l[Man10 丁半]§a§l丁半がキャンセルされました");
+                                Bukkit.getServer().broadcastMessage("§e§l[Man10丁半]§a§l丁半がキャンセルされました");
                             } else {
-                                p.sendMessage("§e§l[Man10 丁半]§4§lあなたは開催者でないのでキャンセルできません");
+                                p.sendMessage("§e§l[Man10丁半]§4§lあなたは開催者でないのでキャンセルできません");
                                 return false;
                             }
                         }
                     }else {
-                        p.sendMessage("§e§l[Man10 丁半]§4§l丁半は開始されてません");
+                        p.sendMessage("§e§l[Man10丁半]§4§l丁半は開始されてません");
                         return false;
                     }
                 }
@@ -203,7 +205,7 @@ public class Man10_Chohan extends JavaPlugin {
 
                     reloadConfig();
                     config = getConfig();
-                    p.sendMessage("§e§l[Man10 丁半]§aReload complete");
+                    p.sendMessage("§e§l[Man10丁半]§aReload complete");
                     return true;
 
                 }
@@ -213,7 +215,7 @@ public class Man10_Chohan extends JavaPlugin {
                 if (args[0].equalsIgnoreCase("new")) {
                     if (setup == true) {
 
-                        p.sendMessage("§e§l[Man10 丁半]§4§l丁半はすでに開始されています");
+                        p.sendMessage("§e§l[Man10丁半]§4§l丁半はすでに開始されています");
                         return true;
 
                     } else {
@@ -222,7 +224,7 @@ public class Man10_Chohan extends JavaPlugin {
 
                             bal = Double.parseDouble(args[1]);
                         }catch (NumberFormatException mc){
-                            sender.sendMessage("§e§l[Man10 丁半]§4§l金額を指定してください.");
+                            sender.sendMessage("§e§l[Man10丁半]§4§l金額を指定してください.");
                             return true;
 
                         }
@@ -235,16 +237,33 @@ public class Man10_Chohan extends JavaPlugin {
         return false;
     }
 
+    String jpnBalForm(double val){
+        long val2 = (long) val;
+
+        String addition = "";
+        String form = "万";
+        long man = val2/10000;
+        if(val >= 100000000){
+            man = val2/100000000;
+            form = "億";
+            long mann = (val2 - man * 100000000) / 10000;
+            addition = mann + "万";
+        }
+        return man + form + addition;
+    }
+
     public void gameclear(){
+
         for (int i = 0; i < chou.size(); i++) {
-            val.deposit(chou.get(i), totalbal/chou.size());
-            chou.remove(i);
+            val.deposit(chou.get(i), bal);
         }
 
         for (int i = 0; i < han.size(); i++) {
-            val.deposit(han.get(i), totalbal/han.size());
-            han.remove(i);
+            val.deposit(han.get(i), bal);
         }
+
+        chou.clear();
+        han.clear();
 
         totalbal = 0;
         setup = false;
@@ -253,13 +272,9 @@ public class Man10_Chohan extends JavaPlugin {
 
     public void gamefinish(){
 
-        for (int i = 0; i < chou.size(); i++) {
-            chou.remove(i);
-        }
+        chou.clear();
 
-        for (int i = 0; i < han.size(); i++) {
-            han.remove(i);
-        }
+        han.clear();
 
         totalbal = 0;
         setup = false;
