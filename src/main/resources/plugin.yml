@@ -1,0 +1,12 @@
+name: Man10_Chohan
+version: ${project.version}
+main: red.man10.man10_chohan.Man10_Chohan
+commands:
+  mc:
+    description: Command no setsumei
+    usage: /<command>
+    default: true
+depend: [Essentials]
+permissions:
+  man10chohan.mc.cancel:
+    default: true

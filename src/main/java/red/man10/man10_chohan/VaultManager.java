@@ -1,4 +1,4 @@
-package me.ryotackey.chohan;
+package red.man10.man10_chohan;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;

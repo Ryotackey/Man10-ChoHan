@@ -1,4 +1,4 @@
-package me.ryotackey.chohan;
+package red.man10.man10_chohan;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -6,13 +6,18 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Random;
 
-import static me.ryotackey.chohan.Chohan_test.*;
+import static red.man10.man10_chohan.Man10_Chohan.bal;
+import static red.man10.man10_chohan.Man10_Chohan.config;
+import static red.man10.man10_chohan.Man10_Chohan.setup;
+import static red.man10.man10_chohan.Man10_Chohan.chou;
+import static red.man10.man10_chohan.Man10_Chohan.han;
+import static red.man10.man10_chohan.Man10_Chohan.owner;
 
 public class newgame {
 
-    private Chohan_test plugin;
+    private Man10_Chohan plugin;
 
-    public newgame(Chohan_test plugin){
+    public newgame(Man10_Chohan plugin){
         this.plugin = plugin;
     }
 

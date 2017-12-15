@@ -1,4 +1,4 @@
-package me.ryotackey.chohan;
+package red.man10.man10_chohan;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -10,7 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Chohan_test extends JavaPlugin {
+public class Man10_Chohan extends JavaPlugin {
 
     public static boolean setup;
 

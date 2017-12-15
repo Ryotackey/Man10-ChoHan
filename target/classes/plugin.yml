@@ -1,6 +1,6 @@
-name: Chohan_plugin
-version: 1.0.0
-main: me.ryotackey.chohan.Chohan_test
+name: Man10_Chohan
+version: 1.0-SNAPSHOT
+main: red.man10.man10_chohan.Man10_Chohan
 commands:
   mc:
     description: Command no setsumei
