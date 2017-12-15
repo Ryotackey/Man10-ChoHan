@@ -25,13 +25,14 @@ public class Man10_Chohan extends JavaPlugin {
 
 
 
-    public VaultManager val = new VaultManager(this);
+    public VaultManager val = null;
 
     @Override
     public void onEnable() {
         getCommand("mc").setExecutor(this);
         saveDefaultConfig();
         config = getConfig();
+        val = new VaultManager(this);
     }
 
     @Override
@@ -78,11 +79,15 @@ public class Man10_Chohan extends JavaPlugin {
 
                                     if (han.get(i) == playeruuid) {
                                         han.remove(i);
+                                        chou.add(playeruuid);
+                                        p.sendMessage("§e§l[Man10 丁半]§a§l丁に張りました");
+                                        return true;
                                     }
                                 }
 
                                 chou.add(playeruuid);
                                 p.sendMessage("§e§l[Man10 丁半]§a§l丁に張りました");
+                                val.withdraw(playeruuid, bal);
                                 return true;
                             } else {
                                 p.sendMessage("§e§l[Man10 丁半]§4§lもう定員です");
@@ -115,11 +120,15 @@ public class Man10_Chohan extends JavaPlugin {
 
                                     if (chou.get(i) == playeruuid) {
                                         chou.remove(i);
+                                        han.add(playeruuid);
+                                        p.sendMessage("§e§l[Man10 丁半]§a§l半に張りました");
+                                        return true;
                                     }
                                 }
 
                                 han.add(playeruuid);
                                 p.sendMessage("§e§l[Man10 丁半]§a§l半に張りました");
+                                val.withdraw(playeruuid, bal);
                                 return true;
                             } else {
                                 p.sendMessage("§e§l[Man10 丁半]§4§lもう定員です");
@@ -224,10 +233,12 @@ public class Man10_Chohan extends JavaPlugin {
 
     public void gameclear(){
         for (int i = 0; i < chou.size(); i++) {
+            val.deposit(chou.get(i), bal);
             chou.remove(i);
         }
 
         for (int i = 0; i < han.size(); i++) {
+            val.deposit(han.get(i), bal);
             han.remove(i);
         }
 

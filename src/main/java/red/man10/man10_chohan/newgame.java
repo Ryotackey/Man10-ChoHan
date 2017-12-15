@@ -83,19 +83,23 @@ public class newgame {
             payout = totalbal / han.size();
         }
 
-        for (int i = 0; i < chou.size(); i++) {
-            plugin.val.withdraw(chou.get(i), bal);
-            chouplayer[i] = Bukkit.getPlayer(chou.get(i));
-            chouplayer[i].sendMessage("§e§l[Man10 丁半]§a§lサイコロを振って" + dice + "がでました！よって" + chouhan + "の勝ちです！");
-            plugin.val.deposit(chou.get(i), payout);
+        Bukkit.broadcastMessage("§e§l[Man10 丁半]§a§lサイコロを振って" + dice + "がでました！よって" + chouhan + "の勝ちです！");
+
+        if (chouhan == "丁") {
+            for (int i = 0; i < chou.size(); i++) {
+                chouplayer[i] = Bukkit.getPlayer(chou.get(i));
+                plugin.val.deposit(chou.get(i), payout);
+            }
+
+        }else {
+
+            for (int i = 0; i < han.size(); i++) {
+                hanplayer[i] = Bukkit.getPlayer(han.get(i));
+                plugin.val.deposit(han.get(i), payout);
+            }
         }
 
-        for (int i = 0; i < han.size(); i++) {
-            plugin.val.withdraw(han.get(i), bal);
-            hanplayer[i] = Bukkit.getPlayer(han.get(i));
-            hanplayer[i].sendMessage("§e§l[Man10 丁半]§a§lサイコロを振って" + dice + "がでました！よって" + chouhan + "の勝ちです！");
-            plugin.val.deposit(han.get(i), payout);
-        }
+        plugin.gameclear();
 
     }
 
