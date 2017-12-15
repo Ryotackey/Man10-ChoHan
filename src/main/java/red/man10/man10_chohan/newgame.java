@@ -6,12 +6,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Random;
 
-import static red.man10.man10_chohan.Man10_Chohan.bal;
-import static red.man10.man10_chohan.Man10_Chohan.config;
-import static red.man10.man10_chohan.Man10_Chohan.setup;
-import static red.man10.man10_chohan.Man10_Chohan.chou;
-import static red.man10.man10_chohan.Man10_Chohan.han;
-import static red.man10.man10_chohan.Man10_Chohan.owner;
+import static red.man10.man10_chohan.Man10_Chohan.*;
 
 public class newgame {
 
@@ -38,13 +33,15 @@ public class newgame {
             public void run() {
                 if (setup = true) {
                     if (timer != 0) {
-                        if (timer % 10 == 0) {
+                        if (timer % 10 == 0 || timer <= 5) {
                             Bukkit.getServer().broadcastMessage("§e[Man10 丁半]§aBET受付終了まであと" + timer + "秒");
                         }
                     } else {
                         if (chou.size() == 0|| han.size() == 0){
                            plugin.gameclear();
                             Bukkit.getServer().broadcastMessage("§e§l[Man10 丁半]§4§l人数が集まらなかったため中止しました");
+
+                            plugin.gameclear();
 
                             cancel();
                             return;
@@ -68,7 +65,6 @@ public class newgame {
         Player[] chouplayer = new Player[chou.size()];
         Player[] hanplayer = new Player[han.size()];
 
-        double totalbal = bal * (chou.size() + han.size());
         double payout = 0;
 
         Random rdice = new Random();
@@ -99,7 +95,7 @@ public class newgame {
             }
         }
 
-        plugin.gameclear();
+        plugin.gamefinish();
 
     }
 
