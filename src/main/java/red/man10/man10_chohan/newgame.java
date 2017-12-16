@@ -16,11 +16,9 @@ public class newgame {
         this.plugin = plugin;
     }
 
-    int timer = config.getInt("Waittime");
-
-    public boolean Start(Player p){
-        owner = p;
-        Bukkit.getServer().broadcastMessage("§e§l[Man10丁半]§a§l" + bal + "円丁半が始められました!");
+    public boolean Start(){
+        plugin.timer = plugin.config.getInt("Waittime");
+        Bukkit.getServer().broadcastMessage(plugin.prefex +"§6§l" + plugin.jpnBalForm(plugin.bal) + "円§a§l丁半が始められました!§f§l[/mc]");
         onStartTimer();
         return true;
     }
@@ -31,31 +29,37 @@ public class newgame {
         new BukkitRunnable(){
             @Override
             public void run() {
-                if (setup = true) {
-                    if (timer != 0) {
-                        if (timer % 10 == 0 || timer <= 5) {
-                            Bukkit.getServer().broadcastMessage("§e[Man10丁半]§aBET受付終了まであと" + timer + "秒");
+                if (setup == true) {
+                    if (plugin.timer >= -2) {
+                        if (plugin.timer % 10 == 0 || plugin.timer <= 5) {
+                            Bukkit.getServer().broadcastMessage(plugin.prefex + "§aBET受付終了まであと" + plugin.timer + "秒");
                         }
-                    } else {
+                    }
+
+                    if (plugin.timer == 0){
                         if (chou.size() == 0|| han.size() == 0){
-                           plugin.gameclear();
-                            Bukkit.getServer().broadcastMessage("§e§l[Man10丁半]§4§l人数が集まらなかったため中止しました");
+                            plugin.gameclear();
+                            Bukkit.getServer().broadcastMessage(plugin.prefex +"§4§l人数が集まらなかったため中止しました");
 
                             plugin.gameclear();
 
                             cancel();
                             return;
                         }else {
-                            Game();
-                            cancel();
-                            return;
+                            Bukkit.broadcastMessage(plugin.prefex + "§a§lサイコロを振っています…  §f§l§k123");
+                            if (plugin.timer == -3) {
+                                Game();
+                                cancel();
+                                return;
+                            }
                         }
                     }
+
                 }else {
                     cancel();
                     return;
                 }
-                timer--;
+                plugin.timer--;
             }
         }.runTaskTimer(plugin,0,20);
     }
@@ -73,38 +77,43 @@ public class newgame {
 
         if (dice % 2 == 0){
             chouhan = "丁";
-            payout = totalbal / chou.size();
+            payout = plugin.totalbal / chou.size();
         }else {
             chouhan = "半";
-            payout = totalbal / han.size();
+            payout = plugin.totalbal / han.size();
         }
 
-        Bukkit.broadcastMessage("§e§l[Man10丁半]§a§lサイコロを振って" + dice + "がでました！よって" + chouhan + "の勝ちです！");
+        Bukkit.broadcastMessage(plugin.prefex + "§f結果: §e§l" + dice +"§c§l" + chouhan + "の勝利！");
 
         if (chouhan == "丁") {
             for (int i = 0; i < chou.size(); i++) {
                 chouplayer[i] = Bukkit.getPlayer(chou.get(i));
                 plugin.val.deposit(chou.get(i), payout);
 
-                Bukkit.broadcastMessage("§e§l[Man10丁半]§a§l" + chouplayer[i].getName() + "さんが" + plugin.jpnBalForm(payout) + "円勝ちました！");
-
-                hanplayer[i].sendMessage("§e[Man10丁半]§cあなたは負けました");
+                Bukkit.broadcastMessage(plugin.prefex + "§c§l" + chouplayer[i].getName() + "さん§a§l勝利！§f" + plugin.jpnBalForm(plugin.bal) + "円§f§l⇒§6§l" + plugin.jpnBalForm(payout) + "円");
             }
 
+            for (int i = 0; i < han.size(); i++){
+                hanplayer[i].sendMessage(plugin.prefex + "§cあなたは負けました");
+            }
+            plugin.gamefinish();
+
         }else {
+            Bukkit.broadcastMessage(plugin.prefex + "§f結果: §e§l" + dice +"§b§l" + chouhan + "の勝利！");
 
             for (int i = 0; i < han.size(); i++) {
                 hanplayer[i] = Bukkit.getPlayer(han.get(i));
                 plugin.val.deposit(han.get(i), payout);
 
-                Bukkit.broadcastMessage("§e§l[Man10丁半]§a§l" + chouplayer[i].getName() + "さんが" + plugin.jpnBalForm(payout) + "円勝ちました！");
-
-                chouplayer[i].sendMessage("§e[Man10丁半]§cあなたは負けました");
+                Bukkit.broadcastMessage(plugin.prefex + "§b§l" + hanplayer[i].getName() + "さん§a§l勝利！§f" + plugin.jpnBalForm(plugin.bal) + "円§f§l⇒§6§l" + plugin.jpnBalForm(payout) + "円");
             }
 
-        }
+            for (int i = 0; i < chou.size(); i++){
+                chouplayer[i].sendMessage(plugin.prefex + "§cあなたは負けました");
+            }
 
-        plugin.gamefinish();
+            plugin.gamefinish();
+        }
 
     }
 

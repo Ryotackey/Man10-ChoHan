@@ -17,15 +17,19 @@ public class Man10_Chohan extends JavaPlugin {
     public static ArrayList<UUID> chou = new ArrayList<>();
     public static ArrayList<UUID> han = new ArrayList<>();
 
-    public static Player owner;
+    public FileConfiguration config;
 
-    public static FileConfiguration config;
+    public double bal;
 
-    public static double bal;
-
-    public static double totalbal;
+    public double totalbal;
 
     public VaultManager val = null;
+
+    public newgame New;
+
+    public int timer;
+
+    public final String prefex = "§f§l[§d§lMa§f§ln§a§l10§c§l丁§b§l半§f§l]";
 
     @Override
     public void onEnable() {
@@ -33,6 +37,7 @@ public class Man10_Chohan extends JavaPlugin {
         saveDefaultConfig();
         config = getConfig();
         val = new VaultManager(this);
+        New = new newgame(this);
     }
 
     @Override
@@ -46,15 +51,17 @@ public class Man10_Chohan extends JavaPlugin {
 
         UUID playeruuid = p.getUniqueId();
 
-        newgame New = new newgame(this);
-
         int MaxPlayer = config.getInt("MaxPlayer");
 
         switch (args.length) {
             case 0:
-                p.sendMessage("§e§l-----§0§l[§d§lMa§f§ln§a§l10§c§l丁§b§l半§0§l]§e§l---------");
-                p.sendMessage("§e現在の状況:§f(§c丁:§f, §b半:" + han.size() + "§f)§a(現在合計" + jpnBalForm(totalbal) + "円)");
-                p.sendMessage("");
+                p.sendMessage("§e§l------------§0§l[§d§lMa§f§ln§a§l10§c§l丁§b§l半§0§l]§e§l------------");
+                p.sendMessage("§e現在の状況:§f(§c丁:" + chou.size() + "人§f, §b半:" + han.size() + "人§f)(§6合計" + jpnBalForm(totalbal) + "円§f)");
+                p.sendMessage("§e§l----------------------------------");
+                p.sendMessage("§c/mc c§f:§c丁(偶数に賭ける)");
+                p.sendMessage("§b/mc h§f:§b半(奇数に賭ける)");
+                p.sendMessage("§6/mc new [金額]§f:§6[金額]で丁半ゲームを開催する");
+
                 break;
 
             case 1:
@@ -72,7 +79,7 @@ public class Man10_Chohan extends JavaPlugin {
                                 for (int i = 0; i < chou.size(); i++) {
 
                                     if (chou.get(i) == playeruuid) {
-                                        p.sendMessage("§e§l[Man10丁半]§4§lもうすでに丁に張っています");
+                                        p.sendMessage("§e§l[Man10丁半]§4§lもうすでに丁に賭けています");
                                         return true;
                                     }
                                 }
@@ -82,7 +89,7 @@ public class Man10_Chohan extends JavaPlugin {
                                     if (han.get(i) == playeruuid) {
                                         han.remove(i);
                                         chou.add(playeruuid);
-                                        Bukkit.broadcastMessage("§e§l[Man10丁半]§c§l" + p.getName() +"さんが丁に張りました§f(§c丁:" + chou.size() + "§f, §b半:" + han.size() + "§f)§a(現在合計" + jpnBalForm(totalbal) + "円)");
+                                        Bukkit.broadcastMessage(prefex + "§c§l" + p.getDisplayName() +"§cさんが丁に賭けました§f§l(§c§l丁:" + chou.size() + "人§f§l, §b§l半:" + han.size() + "人§f§l)(§6§l合計" + jpnBalForm(totalbal) + "円§f§l)");
                                         return true;
                                     }
                                 }
@@ -90,16 +97,16 @@ public class Man10_Chohan extends JavaPlugin {
                                 chou.add(playeruuid);
                                 val.withdraw(playeruuid, bal);
                                 totalbal += bal;
-                                Bukkit.broadcastMessage("§e§l[Man10丁半]§c§l" + p.getName() +"さんが丁に張りました§f(§c丁:" + chou.size() + "§f, §b半:" + han.size() + "§f)§a(現在合計" + jpnBalForm(totalbal) + "円)");
+                                Bukkit.broadcastMessage(prefex + "§c§l" + p.getDisplayName() +"§cさんが丁に賭けました§f§l(§c§l丁:" + chou.size() + "人§f§l, §b§l半:" + han.size() + "人§f§l)(§6§l合計" + jpnBalForm(totalbal) + "円§f§l)");
 
                                 return true;
                             } else {
-                                p.sendMessage("§e§l[Man10丁半]§4§lもう定員です");
+                                p.sendMessage(prefex + "§4§lもう定員です");
                                 return true;
                             }
                         }
                     } else {
-                        p.sendMessage("§e§l[Man10丁半]§4§l丁半は開始されてません");
+                        p.sendMessage(prefex + "§4§l丁半は開始されてません");
                         return false;
 
                     }
@@ -108,14 +115,14 @@ public class Man10_Chohan extends JavaPlugin {
                 if (args[0].equalsIgnoreCase("h")) {
                     if (setup == true) {
                         if (playerbet < bal) {
-                            p.sendMessage("§e§l[Man10丁半]§4§lお金が足りません");
+                            p.sendMessage(prefex + "§4§lお金が足りません");
                             return false;
                         }else {
                             if (han.size() < MaxPlayer) {
                                 for (int i = 0; i < han.size(); i++) {
 
                                     if (han.get(i) == playeruuid) {
-                                        p.sendMessage("§e§l[Man10丁半]§4§lもうすでに半に張っています");
+                                        p.sendMessage(prefex + "§4§lもうすでに半に賭けています");
                                         return true;
                                     }
                                 }
@@ -125,7 +132,7 @@ public class Man10_Chohan extends JavaPlugin {
                                     if (chou.get(i) == playeruuid) {
                                         chou.remove(i);
                                         han.add(playeruuid);
-                                        Bukkit.broadcastMessage("§e§l[Man10丁半]§b§l" + p.getName() +"さんが半に張りました§f(§c丁:" + chou.size() + "§f, §b半:" + han.size() + "§f)§a(現在合計" + jpnBalForm(totalbal) + "円)");
+                                        Bukkit.broadcastMessage(prefex + "§b" + p.getDisplayName() +"§bさんが半に賭けました§f§l(§c§l丁:" + chou.size() + "人§f§l, §b§l半:" + han.size() + "人§f§l)(§6§l合計" + jpnBalForm(totalbal) + "円§f§l)");
                                         return true;
                                     }
                                 }
@@ -133,17 +140,17 @@ public class Man10_Chohan extends JavaPlugin {
                                 han.add(playeruuid);
                                 val.withdraw(playeruuid, bal);
                                 totalbal += bal;
-                                Bukkit.broadcastMessage("§e§l[Man10丁半]§b§l" + p.getName() +"さんが半に張りました§f(§c丁:" + chou.size() + "§f, §b半:" + han.size() + "§f)§a(現在合計" + jpnBalForm(totalbal) + "円)");
+                                Bukkit.broadcastMessage(prefex + "§b" + p.getDisplayName() +"§bさんが半に賭けました§f§l(§c§l丁:" + chou.size() + "人§f§l, §b§l半:" + han.size() + "人§f§l)(§6§l合計" + jpnBalForm(totalbal) + "円§f§l)");
 
                                 return true;
                             } else {
-                                p.sendMessage("§e§l[Man10丁半]§4§lもう定員です");
+                                p.sendMessage(prefex + "§4§lもう定員です");
                                 return true;
                             }
                         }
 
                     } else {
-                        p.sendMessage("§e§l[Man10丁半]§4§l丁半は開始されてません");
+                        p.sendMessage(prefex + "§4§l丁半は開始されてません");
                         return false;
                     }
                 }
@@ -154,7 +161,7 @@ public class Man10_Chohan extends JavaPlugin {
                     String[] hanplayer = new String[han.size()];
 
                     if (setup == true) {
-                        p.sendMessage("§e§l[Man10丁半]§a§l" + jpnBalForm(bal) + "円丁半");
+                        p.sendMessage(prefex + "§a§l" + jpnBalForm(bal) + "円丁半");
                         p.sendMessage("§a§l～丁～");
                         for (int i = 0; i < chou.size(); i++) {
 
@@ -173,40 +180,40 @@ public class Man10_Chohan extends JavaPlugin {
                         }
                         return true;
                     }else {
-                        p.sendMessage("§e§l[Man10丁半]§4§l丁半は開始されてません");
+                        p.sendMessage(prefex + "§4§l丁半は開始されてません");
                         return false;
                     }
                 }
 
                 if (args[0].equalsIgnoreCase("cancel")){
                     if (setup == true){
-                        if(sender.hasPermission("man10chohan.mc.cancel")){
+                        if(p.hasPermission("man10chohan.mc.cancel")){
 
                             gameclear();
 
-                            Bukkit.getServer().broadcastMessage("§e§l[Man10丁半]§a§l丁半がキャンセルされました");
+                            Bukkit.getServer().broadcastMessage(prefex + "§a§l丁半がキャンセルされました");
 
                         }else {
-                            if (owner == p) {
-                                gameclear();
-                                Bukkit.getServer().broadcastMessage("§e§l[Man10丁半]§a§l丁半がキャンセルされました");
-                            } else {
-                                p.sendMessage("§e§l[Man10丁半]§4§lあなたは開催者でないのでキャンセルできません");
-                                return false;
-                            }
+                            p.sendMessage(prefex + "§4§l権限がないのでキャンセルできません");
+                            return false;
                         }
                     }else {
-                        p.sendMessage("§e§l[Man10丁半]§4§l丁半は開始されてません");
+                        p.sendMessage(prefex + "§4§l丁半は開始されてません");
                         return false;
                     }
                 }
 
                 if (args[0].equalsIgnoreCase("reload")){
+                    if (p.hasPermission("man10chohan.mc.cancel")) {
 
-                    reloadConfig();
-                    config = getConfig();
-                    p.sendMessage("§e§l[Man10丁半]§aReload complete");
-                    return true;
+                        reloadConfig();
+                        config = getConfig();
+                        p.sendMessage(prefex + "§aReload complete");
+                        return true;
+                    }else {
+                        p.sendMessage(prefex + "§4§l権限がないのでreloadできません");
+                        return false;
+                    }
 
                 }
                 break;
@@ -215,21 +222,19 @@ public class Man10_Chohan extends JavaPlugin {
                 if (args[0].equalsIgnoreCase("new")) {
                     if (setup == true) {
 
-                        p.sendMessage("§e§l[Man10丁半]§4§l丁半はすでに開始されています");
+                        p.sendMessage(prefex + "§4§l丁半はすでに開始されています");
                         return true;
 
                     } else {
-
                         try {
-
                             bal = Double.parseDouble(args[1]);
                         }catch (NumberFormatException mc){
-                            sender.sendMessage("§e§l[Man10丁半]§4§l金額を指定してください.");
+                            sender.sendMessage(prefex + "§4§l金額を指定してください.");
                             return true;
 
                         }
 
-                        setup = New.Start(p);
+                        setup = New.Start();
                     }
                 }
                 break;
@@ -268,6 +273,7 @@ public class Man10_Chohan extends JavaPlugin {
         totalbal = 0;
         setup = false;
         bal = 0;
+        timer = 0;
     }
 
     public void gamefinish(){

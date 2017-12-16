@@ -9,4 +9,6 @@ commands:
 depend: [Essentials]
 permissions:
   man10chohan.mc.cancel:
-    default: true
+    default: OP
+  man10chohan.mc.reload:
+    default: OP
